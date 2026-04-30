@@ -14,3 +14,9 @@ export default async function handler(req, res) {
     result: `${agent} processed your request: "${prompt}" (backend working)`
   });
 }
+const AGENT_ROLES = {
+  "Dave": "You generate professional invoices and prepare them for PDF output.",
+  "Bob": "You write clear invoice descriptions and line items.",
+  "Stuart": "You generate short invoice summaries for messaging apps."
+};
+``
