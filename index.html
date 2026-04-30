@@ -2,9 +2,47 @@
 <html>
 <head>
   <title>BillFlow</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #111;
+      color: #fff;
+    }
+
+    nav button {
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    section {
+      margin-top: 30px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>BillFlow is Live!</h1>
-  <p>My website is now deployed on Vercel.</p>
-</body>
-</html>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <button onclick="goHome()">Home</button>
+    <button onclick="goDashboard()">Dashboard</button>
+    <button onclick="goAgents()">My Agents</button>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home">
+    <h1>BillFlow is Live 🚀</h1>
+    <p>Your autonomous invoice assistant.</p>
+    <button onclick="goDashboard()">Start Generating</button>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section id="dashboard" style="display:none">
+    <h2>Dashboard</h2>
