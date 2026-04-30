@@ -19,7 +19,32 @@ function goAgents() {
   document.getElementById("agents").style.display = "block";
 }
 
-function selectAgent(name) {
-  document.getElementById("agent-output").innerText =
-    name + " is generating your invoice… (demo)";
+// ✅ REAL AI‑CONNECTED AGENT (NOT DEMO ANYMORE)
+async function selectAgent(name) {
+  const output = document.getElementById("agent-output");
+  output.innerText = "Thinking... 🤖";
+
+  try {
+    const response = await fetch("/api/agent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        agent: name,
+        prompt: "Create a professional invoice with line items and totals."
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Backend error: " + response.status);
+    }
+
+    const data = await response.json();
+    output.innerText = data.result;
+  } catch (error) {
+    console.error(error);
+    output.innerText =
+      "❌ Failed to get AI response. Check backend /api/agent.";
+  }
 }
