@@ -1,112 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>BillFlow</title>
-  <meta charset="UTF-8" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #111;
-      color: #fff;
+<script>
+  // Hide all sections
+  function hideAll() {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("agents").style.display = "none";
+  }
+
+  // Navigation
+  function goHome() {
+    hideAll();
+    document.getElementById("home").style.display = "block";
+  }
+
+  function goDashboard() {
+    hideAll();
+    document.getElementById("dashboard").style.display = "block";
+  }
+
+  function goAgents() {
+    hideAll();
+    document.getElementById("agents").style.display = "block";
+  }
+
+  // ✅ REAL BACKEND-CONNECTED AGENT
+  async function selectAgent(name) {
+    const output = document.getElementById("agent-output");
+    output.innerText = "Processing with backend...";
+
+    try {
+      const response = await fetch("/api/agent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          agent: name,
+          prompt: "Create an invoice"
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Backend error: " + response.status);
+      }
+
+      const data = await response.json();
+      output.innerText = data.result;
+    } catch (error) {
+      console.error(error);
+      output.innerText =
+        "❌ Failed to contact backend. Check /api/agent.";
     }
-
-    nav button {
-      margin-right: 10px;
-    }
-
-    button {
-      padding: 10px 16px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-
-    section {
-      margin-top: 30px;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      margin: 8px 0;
-      cursor: pointer;
-      padding: 6px;
-      background: #222;
-      border-radius: 4px;
-    }
-
-    li:hover {
-      background: #333;
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- NAVIGATION -->
-  <nav>
-    <button onclick="goHome()">Home</button>
-    <button onclick="goDashboard()">Dashboard</button>
-    <button onclick="goAgents()">My Agents</button>
-  </nav>
-
-  <!-- HOME -->
-  <section id="home">
-    <h1>BillFlow is Live 🚀</h1>
-    <p>Your autonomous invoice assistant.</p>
-    <button onclick="goDashboard()">Start Generating</button>
-  </section>
-
-  <!-- DASHBOARD -->
-  <section id="dashboard" style="display:none">
-    <h2>Dashboard</h2>
-    <p>Select what you want to do.</p>
-    <button onclick="goAgents()">Open My Agents</button>
-  </section>
-
-  <!-- AGENTS -->
-  <section id="agents" style="display:none">
-    <h2>My Agents</h2>
-    <ul>
-      <li onclick="selectAgent('Kevin')">Kevin – Support</li>
-      <li onclick="selectAgent('Stuart')">Stuart – WhatsApp</li>
-      <li onclick="selectAgent('Bob')">Bob – Writer</li>
-      <li onclick="selectAgent('Dave')">Dave – PDFs</li>
-    </ul>
-    <p id="agent-output"></p>
-  </section>
-
-  <!-- APP LOGIC -->
-  <script>
-    function hideAll() {
-      document.getElementById("home").style.display = "none";
-      document.getElementById("dashboard").style.display = "none";
-      document.getElementById("agents").style.display = "none";
-    }
-
-    function goHome() {
-      hideAll();
-      document.getElementById("home").style.display = "block";
-    }
-
-    function goDashboard() {
-      hideAll();
-      document.getElementById("dashboard").style.display = "block";
-    }
-
-    function goAgents() {
-      hideAll();
-      document.getElementById("agents").style.display = "block";
-    }
-
-    function selectAgent(name) {
-      document.getElementById("agent-output").innerText =
-        name + " is generating your invoice… (demo mode)";
-    }
-  </script>
-
-</body>
-</html>
+  }
+</script>
