@@ -24,6 +24,23 @@
     section {
       margin-top: 30px;
     }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+      cursor: pointer;
+      padding: 6px;
+      background: #222;
+      border-radius: 4px;
+    }
+
+    li:hover {
+      background: #333;
+    }
   </style>
 </head>
 
@@ -46,3 +63,50 @@
   <!-- DASHBOARD -->
   <section id="dashboard" style="display:none">
     <h2>Dashboard</h2>
+    <p>Select what you want to do.</p>
+    <button onclick="goAgents()">Open My Agents</button>
+  </section>
+
+  <!-- AGENTS -->
+  <section id="agents" style="display:none">
+    <h2>My Agents</h2>
+    <ul>
+      <li onclick="selectAgent('Kevin')">Kevin – Support</li>
+      <li onclick="selectAgent('Stuart')">Stuart – WhatsApp</li>
+      <li onclick="selectAgent('Bob')">Bob – Writer</li>
+      <li onclick="selectAgent('Dave')">Dave – PDFs</li>
+    </ul>
+    <p id="agent-output"></p>
+  </section>
+
+  <!-- APP LOGIC -->
+  <script>
+    function hideAll() {
+      document.getElementById("home").style.display = "none";
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("agents").style.display = "none";
+    }
+
+    function goHome() {
+      hideAll();
+      document.getElementById("home").style.display = "block";
+    }
+
+    function goDashboard() {
+      hideAll();
+      document.getElementById("dashboard").style.display = "block";
+    }
+
+    function goAgents() {
+      hideAll();
+      document.getElementById("agents").style.display = "block";
+    }
+
+    function selectAgent(name) {
+      document.getElementById("agent-output").innerText =
+        name + " is generating your invoice… (demo mode)";
+    }
+  </script>
+
+</body>
+</html>
